@@ -24,8 +24,16 @@ public class WikiGraphUtil {
 	 * 
 	 * @param xml
 	 * @return
+	 * @throws IOException
+	 * @throws SAXException
+	 * @throws ParserConfigurationException
 	 */
-	public static String wikiPageXmlToMarkup(String pageXml) {
+	public static String wikiPageXmlToMarkup(String pageXml)
+			throws ParserConfigurationException, SAXException, IOException {
+		return getStringFromXmlNoChild(pageXml);
+	}
+
+	public static String wikiPageXmlToMarkupOld(String pageXml) {
 		// page -> revision -> <text xml:space="preserve">
 		if (StringUtils.isBlank(pageXml)) {
 			return "";
@@ -40,12 +48,6 @@ public class WikiGraphUtil {
 		}
 
 		return "";
-	}
-
-	public static String wikiPageXmlToMarkup2(String pageXml)
-			throws ParserConfigurationException, SAXException, IOException {
-		String text = getStringFromXmlNoChild(pageXml);
-		return text;
 	}
 
 	public static String wikiMarkupToText(String wikiMarkup)
@@ -64,6 +66,8 @@ public class WikiGraphUtil {
 		// remove extra spaces
 		wikiMarkup = wikiMarkup.replaceAll("\\s+", " ");
 		wikiMarkup = wikiMarkup.replaceAll("(\\S\\S\\.) ", "$1\n");
+		wikiMarkup = wikiMarkup.toLowerCase();
+
 		return wikiMarkup;
 	}
 
@@ -135,8 +139,8 @@ public class WikiGraphUtil {
 		return sb.toString();
 	}
 
-	public static void readXml(String xml) throws ParserConfigurationException,
-			SAXException, IOException {
+	private static void readXml(String xml)
+			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
 		InputSource is = new InputSource();
@@ -168,7 +172,7 @@ public class WikiGraphUtil {
 		// setText(getStringFromTag(revision, "text"));
 	}
 
-	public static String getStringFromTag(Element rootElement, String tagname) {
+	private static String getStringFromTag(Element rootElement, String tagname) {
 		NodeList list = rootElement.getElementsByTagName(tagname);
 		if (list.getLength() > 0) {
 			Element element = (Element) list.item(0);
@@ -181,7 +185,7 @@ public class WikiGraphUtil {
 		return null;
 	}
 
-	public static String getStringFromXml(String xml)
+	private static String getStringFromXml(String xml)
 			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
@@ -199,7 +203,7 @@ public class WikiGraphUtil {
 		return "";
 	}
 
-	public static String getStringFromXmlNoChild(String xml)
+	private static String getStringFromXmlNoChild(String xml)
 			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
