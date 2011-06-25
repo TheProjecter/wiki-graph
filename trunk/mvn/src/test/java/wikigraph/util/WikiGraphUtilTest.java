@@ -15,21 +15,12 @@ public class WikiGraphUtilTest {
 	private static Log log = LogFactory.getLog(WikiGraphUtilTest.class);
 
 	@Test
-	public void wikiPageXmlToText() throws IOException {
+	public void wikiPagesXmlToText() throws IOException, ParserConfigurationException, SAXException {
 		File sampleFile = new File("src" + File.separator + "test"
 				+ File.separator + "data" + File.separator + "anarchism.xml");
 
 		String pageXml = FileUtils.readFileToString(sampleFile);
 		String text = WikiGraphUtil.wikiPageXmlToMarkup(pageXml);
-		log.info(text);
-	}
-
-	public void wikiPageXmlToText2() throws IOException, ParserConfigurationException, SAXException {
-		File sampleFile = new File("src" + File.separator + "test"
-				+ File.separator + "data" + File.separator + "anarchism.xml");
-
-		String pageXml = FileUtils.readFileToString(sampleFile);
-		String text = WikiGraphUtil.wikiPageXmlToMarkup2(pageXml);
 		log.info(text);
 	}
 
@@ -40,6 +31,18 @@ public class WikiGraphUtilTest {
 				+ "anarchism-wiki-markup.txt");
 
 		String wikiMarkup = FileUtils.readFileToString(sampleFile);
+		String text = WikiGraphUtil.wikiMarkupToText(wikiMarkup);
+		log.info(text);
+	}
+
+	@Test
+	public void wikiPageXmlToText() throws IOException, ParserConfigurationException, SAXException {
+		File sampleFile = new File("src" + File.separator + "test"
+				+ File.separator + "data" + File.separator
+				+ "anarchism-page.xml");
+		String pageXml = FileUtils.readFileToString(sampleFile);
+		String wikiMarkup = WikiGraphUtil.wikiPageXmlToMarkup(pageXml);
+		
 		String text = WikiGraphUtil.wikiMarkupToText(wikiMarkup);
 		log.info(text);
 	}
