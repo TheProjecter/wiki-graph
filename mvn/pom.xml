@@ -47,6 +47,11 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.0.4</version>
 		</dependency>
+                <dependency>
+                        <groupId>org.apache.mahout.hadoop</groupId>
+                        <artifactId>hadoop-core</artifactId>
+                        <version>0.20.1</version>
+                </dependency>
 	</dependencies>
 
 	<build>
