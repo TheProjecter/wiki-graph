@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,7 +21,7 @@ public class WikiGraphUtil {
 	/**
 	 * Convert wikipedia XML to text
 	 * 
-	 * @param xml
+	 * @param pageXml
 	 * @return
 	 * @throws IOException
 	 * @throws SAXException
@@ -35,7 +34,7 @@ public class WikiGraphUtil {
 
 	public static String wikiPageXmlToMarkupOld(String pageXml) {
 		// page -> revision -> <text xml:space="preserve">
-		if (StringUtils.isBlank(pageXml)) {
+		if (isBlank(pageXml)) {
 			return "";
 		}
 
@@ -50,7 +49,11 @@ public class WikiGraphUtil {
 		return "";
 	}
 
-	public static String wikiMarkupToText(String wikiMarkup)
+    private static boolean isBlank(String pageXml) {
+        return (pageXml==null)||(pageXml.length()==0);
+    }
+
+    public static String wikiMarkupToText(String wikiMarkup)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		// wikiMarkup = getStringFromXmlNoChild(wikiMarkup);
